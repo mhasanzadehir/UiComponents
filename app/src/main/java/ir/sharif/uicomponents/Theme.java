@@ -22,6 +22,7 @@ public class Theme {
     public static final String key_checkboxSquareDisabled = "checkboxSquareDisabled";
     public static final String key_dialogCheckboxSquareCheck = "dialogCheckboxSquareCheck";
     public static final String key_checkboxSquareCheck = "checkboxSquareCheck";
+    public static final String key_chats_actionUnreadIcon = "chats_actionUnreadIcon";
 
     private static HashMap<String, Integer> defaultColors = new HashMap<>();
 
@@ -34,6 +35,7 @@ public class Theme {
         defaultColors.put(key_checkboxSquareDisabled, 0xffb0b0b0);
         defaultColors.put(key_dialogCheckboxSquareCheck, 0xffffffff);
         defaultColors.put(key_checkboxSquareCheck, 0xffffffff);
+        defaultColors.put(key_chats_actionUnreadIcon, 0xff737373);
     }
 
     public static int getColor(String key) {

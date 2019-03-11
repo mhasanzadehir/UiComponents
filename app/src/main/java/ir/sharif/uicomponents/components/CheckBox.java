@@ -222,7 +222,7 @@ public class CheckBox extends View {
             drawBitmap.eraseColor(0);
             float rad = getMeasuredWidth() / 2;
 
-            float roundProgress = progress >= 0.5f ? 1.0f : progress / 0.5f;
+            float roundProgress = progress >= 0.5f ? 1.2f : progress / 0.5f;
             float checkProgress = progress < 0.5f ? 0.0f : (progress - 0.5f) / 0.5f;
 
             float roundProgressCheckState = isCheckAnimation ? progress : (1.0f - progress);
