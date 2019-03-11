@@ -73,9 +73,10 @@ public class CheckBox extends View {
         super.setVisibility(visibility);
         if (visibility == VISIBLE && drawBitmap == null) {
             try {
-                drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(size), AndroidUtilities.dp(size), Bitmap.Config.ARGB_4444);
+                //android document point that ARGB_8888 is better than 4444. ARGB_4444 deprecated after API13.
+                drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(size), AndroidUtilities.dp(size), Bitmap.Config.ARGB_8888);
                 bitmapCanvas = new Canvas(drawBitmap);
-                checkBitmap = Bitmap.createBitmap(AndroidUtilities.dp(size), AndroidUtilities.dp(size), Bitmap.Config.ARGB_4444);
+                checkBitmap = Bitmap.createBitmap(AndroidUtilities.dp(size), AndroidUtilities.dp(size), Bitmap.Config.ARGB_8888);
                 checkCanvas = new Canvas(checkBitmap);
             } catch (Throwable ignore) {
 
