@@ -27,6 +27,13 @@ public class AndroidUtilities {
         return (int) Math.ceil(density * value);
     }
 
+    public static float dpf2(float value) {
+        if (value == 0) {
+            return 0;
+        }
+        return density * value;
+    }
+
     public static void checkDisplaySize(Context context, Configuration newConfiguration) {
         try {
             density = context.getResources().getDisplayMetrics().density;
