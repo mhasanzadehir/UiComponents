@@ -294,8 +294,8 @@ public class CheckBox extends View {
             return this;
         }
 
-        public Builder checkOffset(int dp) {
-            checkBox.setCheckOffset(AndroidUtilities.dp(dp));
+        public Builder checkOffset(int checkOffset) {
+            checkBox.setCheckOffset(checkOffset);
             return this;
         }
 
@@ -309,13 +309,13 @@ public class CheckBox extends View {
             return this;
         }
 
-        public Builder hasBorder(boolean has) {
-            checkBox.setHasBorder(has);
+        public Builder hasBorder(boolean value) {
+            checkBox.setHasBorder(value);
             return this;
         }
 
-        public Builder isChecked(boolean is) {
-            checkBox.setChecked(is, false);
+        public Builder isChecked(boolean value) {
+            checkBox.setChecked(value, false);
             return this;
         }
 

@@ -27,14 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         val checkBox = CheckBox.Builder(this)
             .size(30)
-            .checkOffset(1)
-            .backgroundColor(-0xc33511)
-            .checkColor(-0x1)
-            .hasBorder(true)
+            .checkOffset(CheckBox.DEFAULT_CHECK_OFFSET)
+            .backgroundColor(CheckBox.DEFAULT_BACKGROUND)
+            .checkColor(CheckBox.DEFAULT_CHECK_COLOR)
+            .hasBorder(false)
             .isChecked(false)
             .drawBackground(true)
-            .checkListener {
-                isChecked -> Log.i("TAG", "isChecked:$isChecked")
+            .checkListener { isChecked ->
+                Log.i("TAG", "CheckBox-isChecked:$isChecked")
             }
             .build()
 
@@ -46,14 +46,25 @@ class MainActivity : AppCompatActivity() {
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
 
-        val checkBoxSquare = CheckBoxSquare(this, true)
+        val checkBoxSquare = CheckBoxSquare.Builder(this)
+            .isChecked(false)
+            .isDisabled(false)
+            .squareBackground(CheckBoxSquare.DEFAULT_SQUARE_BACKGROUND)
+            .squareCheckedColor(CheckBoxSquare.DEFAULT_SQUARE_CHECKED_COLOR)
+            .squareDisabledColor(CheckBoxSquare.SQUARE_DISABLED_COLOR)
+            .squareUncheckedColor(CheckBoxSquare.DEFAULT_SQUARE_UNCHECKED_COLOR)
+            .checkListener { isChecked ->
+                Log.i("TAG", "checkBoxSquare-isChecked:$isChecked")
+            }
+            .build()
+
         rootLayout.addView(
             checkBoxSquare,
             LayoutHelper.createFrame(30, 30, Gravity.TOP or Gravity.LEFT, 20F, 60F, 0F, 0F)
         )
-        checkBoxSquare.setOnClickListener {
-            checkBoxSquare.setChecked(!checkBoxSquare.isChecked, true)
-        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         val arrowDrawable = AnimatedArrowDrawable(0xffffffff.toInt(), false)
         val imageView = ImageView(this)
