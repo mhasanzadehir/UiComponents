@@ -10,14 +10,20 @@ import android.support.annotation.Keep;
 import android.text.TextPaint;
 import android.view.View;
 import ir.sharif.uicomponents.AndroidUtilities;
+import ir.sharif.uicomponents.R;
 
 public class CheckBox extends View {
+
+    public static final int DEFAULT_CHECK_COLOR = -0x1;
+    public static final int CHECK_RESOURCE = R.drawable.checkbig;
+    public static final int DEFAULT_BACKGROUND = -0xc33511;
+    public static final int DEFAULT_CHECK_OFFSET = AndroidUtilities.dp(1f);
+    public static final int DEFAULT_SIZE = 22;
 
     private Drawable checkDrawable;
     private static Paint paint;
     private static Paint eraser;
     private static Paint eraser2;
-    private static Paint checkPaint;
     private static Paint backgroundPaint;
     private TextPaint textPaint;
 
@@ -26,8 +32,8 @@ public class CheckBox extends View {
     private Canvas bitmapCanvas;
     private Canvas checkCanvas;
 
-    private boolean drawBackground;
-    private boolean hasBorder;
+    private boolean drawBackground = true;
+    private boolean hasBorder = false;
 
     private float progress;
     private ObjectAnimator checkAnimator;
@@ -36,14 +42,16 @@ public class CheckBox extends View {
     private boolean attachedToWindow;
     private boolean isChecked;
 
-    private int size = 22;
-    private int checkOffset;
-    private int color;
+    private int size = DEFAULT_SIZE;
+    private int checkOffset = DEFAULT_CHECK_OFFSET;
+    private int color = DEFAULT_BACKGROUND;
     private String checkedText;
+
+    private CheckBoxListener listener;
 
     private final static float progressBounceDiff = 0.2f;
 
-    public CheckBox(Context context, int resId) {
+    public CheckBox(Context context) {
         super(context);
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -64,8 +72,9 @@ public class CheckBox extends View {
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(AndroidUtilities.dp(18));
         textPaint.setTypeface(AndroidUtilities.getTypeface("fonts/rmedium.ttf"));
+        textPaint.setColor(DEFAULT_CHECK_COLOR);
 
-        checkDrawable = context.getResources().getDrawable(resId).mutate();
+        checkDrawable = context.getResources().getDrawable(CHECK_RESOURCE).mutate();
     }
 
     @Override
@@ -263,6 +272,76 @@ public class CheckBox extends View {
 
             canvas.drawBitmap(checkBitmap, 0, 0, null);
         }
+    }
+
+    public void setListener(CheckBoxListener listener) {
+        this.listener = listener;
+    }
+
+    public interface CheckBoxListener {
+        void checkChanged(boolean isChecked);
+    }
+
+    public static final class Builder {
+        private CheckBox checkBox;
+
+        public Builder(Context context) {
+            checkBox = new CheckBox(context);
+        }
+
+        public Builder size(int size) {
+            checkBox.setSize(size);
+            return this;
+        }
+
+        public Builder checkOffset(int dp) {
+            checkBox.setCheckOffset(AndroidUtilities.dp(dp));
+            return this;
+        }
+
+        public Builder backgroundColor(int color) {
+            checkBox.setBackgroundColor(color);
+            return this;
+        }
+
+        public Builder checkColor(int color) {
+            checkBox.setCheckColor(color);
+            return this;
+        }
+
+        public Builder hasBorder(boolean has) {
+            checkBox.setHasBorder(has);
+            return this;
+        }
+
+        public Builder isChecked(boolean is) {
+            checkBox.setChecked(is, false);
+            return this;
+        }
+
+        public Builder drawBackground(boolean value) {
+            checkBox.setDrawBackground(value);
+            return this;
+        }
+
+        public Builder checkListener(CheckBoxListener listener) {
+            checkBox.setListener(listener);
+            return this;
+        }
+
+        public CheckBox build() {
+            checkBox.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkBox.setChecked(!checkBox.isChecked, true);
+                    checkBox.listener.checkChanged(checkBox.isChecked);
+                }
+            });
+            checkBox.setVisibility(VISIBLE);
+            return checkBox;
+        }
+
+
     }
 
 }
